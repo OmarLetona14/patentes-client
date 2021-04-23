@@ -1,0 +1,58 @@
+<form novalidation class="row g-3" (ngSubmit)="onSaveData()" [formGroup]="registerForm">
+    <div class="col-md-6">
+        <label class="form-label text-strong"><i class="fas fa-globe"></i> Nombre del pais <small>*</small></label>
+        <input type="text" class="form-control shadow-lg rounded-pill" id="nombre_pais" placeholder="Nombre del pais" formControlName="nombre_pais" [class]="validField('nombre_pais')">
+        <div class="invalid-feedback">
+        <span class="warning-text" *ngIf="registerForm.get('nombre_pais').errors?.required">
+            <strong>Por favor, introduzca un nombre del pais.</strong>
+        </span>
+        </div><hr>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label text-strong"><i class="fas fa-users"></i> Poblacion <small>*</small></label>
+        <input type="number" class="form-control shadow-lg rounded-pill" id="poblacion" placeholder="Poblacion" formControlName="poblacion" [class]="validField('poblacion')">
+        <div class="invalid-feedback">
+            <span class="warning-text" *ngIf="registerForm.get('poblacion').errors?.required">
+                <strong>Por favor, introduzca una poblacion.</strong>
+            </span>
+        </div><hr>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label text-strong"><i class="fas fa-ruler-combined"></i> Area <small>*</small></label>
+        <input type="number" class="form-control shadow-lg rounded-pill" id="area" placeholder="Area" formControlName="area" [class]="validField('area')">
+        <div class="invalid-feedback">
+            <span class="warning-text" *ngIf="registerForm.get('area').errors?.required">
+                <strong>Por favor, introduzca un area.</strong>
+            </span>
+        </div><hr>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label text-strong"><i class="fas fa-map-marker-alt"></i> Capital <small>*</small></label>
+         <input type="text" class="form-control shadow-lg rounded-pill" id="capital" placeholder="Capital" formControlName="capital" [class]="validField('capital')">                <div class="invalid-feedback">
+            <span class="warning-text"  *ngIf="registerForm.get('capital').errors?.required">
+                <strong>Por favor, introduzca una capital.</strong>
+            </span>
+        </div><hr>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label text-strong"><i class="fas fa-chart-area"></i> Region <small>*</small></label>
+        <select class="form-control shadow-lg rounded-pill"  name="nombre_region" id="nombre_region" formControlName="nombre_region" >
+            <option  value="{{c.nombre_region}}" *ngFor="let c of regiones">{{c.nombre_region}}</option> 
+        </select>
+        <div class="invalid-feedback">
+            <span class="warning-text"  *ngIf="registerForm.get('nombre_region').errors?.required">
+                <strong> Por favor, introduzca una region.</strong>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-12 mb-2">
+        <hr class="w-100" style="color: white; height: 10px;">
+    </div>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-block btn-md shadow-lg rounded-pill" [ngClass]="isValidData()">
+            Aceptar 
+            <i class="fas fa-chevron-circle-right" *ngIf="registerForm.valid"></i>
+            <i class="fas fa-times" *ngIf="!registerForm.valid"></i>
+        </button>
+    </div>
+</form>
