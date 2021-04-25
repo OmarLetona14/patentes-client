@@ -1,0 +1,45 @@
+<form novalidation class="row g-3" (ngSubmit)="onSaveData()" [formGroup]="registerForm">
+    <div class="col-md-6 p-4">
+        <label class="form-label text-strong"><i class="fas fa-pen"></i> Contenido de la pregunta  <small>*</small></label>
+        <input type="text" class="form-control shadow-lg rounded-pill" id="contenido" placeholder="Escriba su pregunta" formControlName="contenido" [class]="validField('contenido')">
+        <div class="invalid-feedback">
+        <span class="warning-text" *ngIf="registerForm.get('contenido').errors?.required">
+            <strong>Por favor, introduzca una pregunta.</strong>
+        </span>
+        </div>
+    </div>
+    <div class="col-md-6 p-4">
+        <label class="form-label text-strong"> <i class="fas fa-book-open"></i> Encuesta <small>*</small></label>
+        <select class="form-control shadow-lg rounded-pill"  name="nombre_encuesta" id="nombre_encuesta" formControlName="nombre_encuesta" >
+            <option  value="{{c.nombre_encuesta}}" *ngFor="let c of encuestas">{{c.nombre_encuesta}}</option> 
+        </select>
+        <div class="invalid-feedback">
+            <span class="warning-text"  *ngIf="registerForm.get('nombre_encuesta').errors?.required">
+                <strong> Por favor, introduzca una encuesta.</strong>
+            </span>
+        </div>
+    </div>
+    <ng-container *ngIf="edit">
+        <div class="col-md-6">
+            <label class="form-label text-strong"> <i class="fas fa-question"></i> Respuesta correcta <small>*</small></label>
+            <select class="form-control shadow-lg rounded-pill"  name="respuesta" id="respuesta">
+                <option  value="{{c.respuestas}}" *ngFor="let c of respuestas">{{c.inciso}}. {{c.respuesta}}</option> 
+            </select>
+        </div>
+        <div class="col-md-6">
+            <div class="flex-middle">
+                <strong>Respuesta correcta actual: <br> {{respuesta_correcta}}</strong>
+            </div>
+        </div>
+    </ng-container>
+    <div class="col-md-12 mb-2">
+        <hr class="w-100" style="color: white; height: 10px;">
+    </div>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-block btn-md shadow-lg rounded-pill" [ngClass]="isValidData()">
+            Aceptar 
+            <i class="fas fa-chevron-circle-right" *ngIf="registerForm.valid"></i>
+            <i class="fas fa-times" *ngIf="!registerForm.valid"></i>
+        </button>
+    </div>
+</form>

@@ -4,6 +4,8 @@ import { ConsultasComponent } from './components/consultas/consultas.component';
 import { LoginComponent } from './components/login/login.component';
 import { PaisesFormComponent } from './components/paises-form/paises-form.component';
 import { PaisesListComponent } from './components/paises-list/paises-list.component';
+import { PreguntasFormComponent } from './components/preguntas-form/preguntas-form.component';
+import { PreguntasListComponent } from './components/preguntas-list/preguntas-list.component';
 
 const routes: Routes = [
   {
@@ -26,6 +28,22 @@ const routes: Routes = [
   {
     path:'form-paises',
     component:PaisesFormComponent
+  },
+  {
+    path:'edit-pais/:id',
+    component:PaisesFormComponent
+  },
+  {
+    path:'preguntas',
+    component:PreguntasListComponent
+  },
+  {
+    path:'form-preguntas',
+    component:PreguntasFormComponent
+  },
+  {
+    path:'edit-pregunta/:id',
+    component:PreguntasFormComponent
   }
 ];
 

@@ -1,4 +1,12 @@
-<a href="/form-paises" class="btn btn-lg shadow-lg bg-success rounded" *ngIf="this.router.url == '/paises'" 
+<ng-container *ngIf="this.router.url == '/paises'">
+   <a routerLink="/form-paises" class="btn btn-lg shadow-lg bg-success rounded"  
    style="position: fixed; font-size:15px; padding: 25px; right: 30px; bottom: 40px;color: black;" >
-   <i class="fas fa-plus"></i>
-</a>
+      <i class="fas fa-plus"></i>
+   </a>
+</ng-container>
+<ng-container *ngIf="this.router.url == '/preguntas'">
+   <a routerLink="/form-preguntas" class="btn btn-lg shadow-lg bg-success rounded"  
+   style="position: fixed; font-size:15px; padding: 25px; right: 30px; bottom: 40px;color: black;" >
+      <i class="fas fa-plus"></i>
+   </a>
+</ng-container>

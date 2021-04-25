@@ -1,15 +1,12 @@
-<div class="container p-4">
-  <table class="table table-striped shadow-lg rounded table-responsive">
-      <thead class="bg-info shadow-lg rounded-pill">
-          <th scope="col">Nombre del pais</th>
-          <th scope="col">Numero de respuestas</th>
-      </thead>
-      <tbody>
-          <tr *ngFor="let country of countries">
-              <td>{{country.nombre_pais}}</td>
-              <td>{{country.numero_respuestas}}</td>
-          </tr>
-      </tbody>
-  </table>
-</div>
-
+<table class="table table-striped shadow-lg bg-secondary">
+    <thead class="bg-info shadow-lg rounded-pill">
+        <th scope="col">Nombre del pais</th>
+        <th scope="col">Numero de respuestas</th>
+    </thead>
+    <tbody class="">
+        <tr *ngFor="let country of countries">
+            <td>{{country.nombre_pais}}</td>
+            <td>{{country.numero_respuestas}}</td>
+        </tr>
+    </tbody>
+</table>

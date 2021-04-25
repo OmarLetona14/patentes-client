@@ -1,0 +1,13 @@
+.flex-middle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.warning-text{
+    color:gold;
+}
+
+.text-strong{
+    color: black;
+}

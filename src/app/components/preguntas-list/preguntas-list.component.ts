@@ -1,21 +1,24 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaisService } from 'src/app/services/pais.service';
+import Respuesta from 'src/app/model/Respuesta';
+import { PreguntaService } from 'src/app/services/pregunta.service';
+import { RespuestaService } from 'src/app/services/respuesta.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-paises-list',
-  templateUrl: './paises-list.component.html',
-  styleUrls: ['./paises-list.component.css']
+  selector: 'app-preguntas-list',
+  templateUrl: './preguntas-list.component.html',
+  styleUrls: ['./preguntas-list.component.css']
 })
-export class PaisesListComponent implements OnInit {
+export class PreguntasListComponent implements OnInit {
 
   @HostBinding('class') classes = 'row'
-  paises:any = [];
-  filterCountry:string = '';
-  constructor(private paisesService:PaisService, private spinnerService:SpinnerService,
-    private router:Router) { }
+  preguntas:any = [];
+  respuestas:any = [];
+  filterQuestion:string = '';
+  constructor(private preguntasService:PreguntaService, private spinnerService:SpinnerService,
+    private router:Router, private respuestaService:RespuestaService) { }
 
   ngOnInit(): void {
     this.getAll();
@@ -23,9 +26,10 @@ export class PaisesListComponent implements OnInit {
 
   getAll(){
     this.spinnerService.getSpinner();
-    this.paisesService.getAll().subscribe(
+    this.preguntasService.getAll().subscribe(
       res => {
-        this.paises = res;
+        this.preguntas = res;
+        
         this.spinnerService.stopSpinner();
       },
       err =>{
@@ -45,7 +49,7 @@ export class PaisesListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.spinnerService.getSpinner();
-        this.paisesService.delete(id).subscribe(
+        this.preguntasService.delete(id).subscribe(
           res =>{
             this.getAll();
             this.spinnerService.stopSpinner();
@@ -67,7 +71,6 @@ export class PaisesListComponent implements OnInit {
   }
 
   updateElement(id:string){
-    this.router.navigate([`edit-pais/${id}`]);
+    this.router.navigate([`edit-pregunta/${id}`]);
   }
-
 }

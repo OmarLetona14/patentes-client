@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PaisService } from 'src/app/services/pais.service';
 import { RegionService } from 'src/app/services/region.service';
 import Pais from 'src/app/model/Pais';
+import Region from 'src/app/model/Region';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-paises-form',
@@ -13,6 +15,7 @@ import Pais from 'src/app/model/Pais';
 })
 export class PaisesFormComponent implements OnInit {
 
+  public id:string;
   public registerForm: FormGroup;  
   regiones:any = [];
   pais:Pais = {
@@ -23,51 +26,79 @@ export class PaisesFormComponent implements OnInit {
     capital:"",
     id_region:"",
     nombre_region:""
-  }
+  };
+  region:Region ={
+    id_region:"",
+    nombre_region:""
+  };
+  edit:boolean = false; 
 
-  constructor(private paisesService:PaisService, private fb:FormBuilder, private spinner:SpinnerService, private regionService:RegionService) { }
+  constructor(private paisesService:PaisService, private fb:FormBuilder, 
+    private spinner:SpinnerService, private regionService:RegionService, private router:Router,
+    private activedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.initForm();
     this.getAllRegiones();
+    const params = this.activedRoute.snapshot.params;
+    if(params.id){
+      this.id = params.id;
+      this.edit = true;
+      this.paisesService.getOne(params.id).subscribe(
+        res=>{
+          this.pais = res as any;
+          this.registerForm.patchValue(this.pais);
+        },
+        err=>{
+          console.log(err);
+        }
+      );
+    }
   }
 
-  async onSaveData():Promise<void>{
-    
+  async saveData():Promise<void>{
     if (this.registerForm.valid){
       const formValues = this.registerForm.value;
+      delete this.region.id_region;
       delete this.pais.id_pais;
+      delete this.pais.nombre_region;
+      this.region.nombre_region = formValues.nombre_region;
       this.pais.nombre_pais = formValues.nombre_pais;
       this.pais.poblacion = formValues.poblacion;
       this.pais.area = formValues.area;
       this.pais.capital = formValues.capital;
-      this.pais.id_region = this.getIDRegion(formValues.nombre_region);
-      console.log(this.pais);
-      try {
-        this.spinner.getSpinner();
-        
-        this.spinner.stopSpinner(); 
-        /*
-        this.paisesService.insert(this.pais).subscribe(
-          res =>{
-            this.spinner.stopSpinner();    
-            Swal.fire('Pais registrado', `<strong>
-            El pais ha sido registrado correctamente.
-            </strong>`, 'success');
-            this.registerForm.reset();
-          },
-          err=>{
-
+      this.regionService.getByName(this.region).subscribe(
+        res=>{
+          this.pais.id_region = res[0].id_region
+          try {
+            this.spinner.getSpinner();
+            this.paisesService.insert(this.pais).subscribe(
+              res =>{
+                this.spinner.stopSpinner();    
+                Swal.fire('Pais registrado', `<strong>
+                El pais ha sido registrado correctamente.
+                </strong>`, 'success');
+                this.registerForm.reset();
+                this.router.navigate(['/paises']);
+              },
+              err=>{
+                this.spinner.stopSpinner();
+                Swal.fire('Error de servidor', `<strong>
+                Ocurrio un error al comunicarse con el servidor, por favor, <br>
+                intentelo mas tarde.
+                </strong>`, 'error');
+              }
+            );
+          } catch (error) {
+            this.spinner.stopSpinner();
+            Swal.fire('Error de servidor', `<strong>
+            Ocurrio un error al comunicarse con el servidor, por favor, <br>
+            intentelo mas tarde.
+            </strong>`, 'error');
           }
-        );*/
-      } catch (error) {
-        this.spinner.stopSpinner();
-        Swal.fire('Error de servidor', `<strong>
-        Ocurrio un error al comunicarse con el servidor, por favor, <br>
-        intentelo mas tarde.
-        </strong>`, 'error');
-      }
-        
+        },
+        err=>{console.log(err)}
+      );
     }
     else{
       Swal.fire('Campos incorrectos', `<strong>
@@ -76,21 +107,71 @@ export class PaisesFormComponent implements OnInit {
     }
   }
 
-  getIDRegion(nombre:string):string{
-    this.regiones.forEach(element => {
-      if(element.nombre_region === nombre){
-        return element.id_region;
-      }
-    });
-    return "";
-  }
-
   isValidData():String{
     if (this.registerForm.valid){
       return 'btn-success';
     }
     else{
       return 'btn-warning';
+    }
+  }
+
+  async onSaveData():Promise<void>{
+    if(!this.edit){
+      this.saveData()
+    }else{
+      this.onEditData();
+    }
+  }
+
+  async onEditData():Promise<void>{
+    if (this.registerForm.valid){
+      const formValues = this.registerForm.value;
+      delete this.region.id_region;
+      delete this.pais.id_pais;
+      delete this.pais.nombre_region;
+      this.region.nombre_region = formValues.nombre_region;
+      this.pais.nombre_pais = formValues.nombre_pais;
+      this.pais.poblacion = formValues.poblacion;
+      this.pais.area = formValues.area;
+      this.pais.capital = formValues.capital;
+      this.regionService.getByName(this.region).subscribe(
+        res=>{
+          this.pais.id_region = res[0].id_region
+          try {
+            this.spinner.getSpinner();
+            this.paisesService.update(this.id, this.pais).subscribe(
+              res =>{
+                this.spinner.stopSpinner();    
+                Swal.fire('Pais editado', `<strong>
+                El pais ha sido editado correctamente.
+                </strong>`, 'success');
+                this.registerForm.reset();
+                this.router.navigate(['/paises']);
+              },
+              err=>{
+                this.spinner.stopSpinner();
+                Swal.fire('Error de servidor', `<strong>
+                Ocurrio un error al comunicarse con el servidor, por favor, <br>
+                intentelo mas tarde.
+                </strong>`, 'error');
+              }
+            );
+          } catch (error) {
+            this.spinner.stopSpinner();
+            Swal.fire('Error de servidor', `<strong>
+            Ocurrio un error al comunicarse con el servidor, por favor, <br>
+            intentelo mas tarde.
+            </strong>`, 'error');
+          }
+        },
+        err=>{console.log(err)}
+      );
+    }
+    else{
+      Swal.fire('Campos incorrectos', `<strong>
+      Por favor, llene todos los campos de manera correcta.
+      </strong>`, 'error');
     }
   }
 
@@ -111,7 +192,6 @@ export class PaisesFormComponent implements OnInit {
     });
   }
 
-
   getAllRegiones(){
     this.spinner.getSpinner();
     this.regionService.getAll().subscribe(
@@ -121,5 +201,4 @@ export class PaisesFormComponent implements OnInit {
       this.spinner.stopSpinner()}
     );
   }
-
 }

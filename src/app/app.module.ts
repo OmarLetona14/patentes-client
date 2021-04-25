@@ -22,6 +22,8 @@ import { PaisesListComponent } from './components/paises-list/paises-list.compon
 import { ButtonsComponent } from './components/buttons/buttons.component';
 import { PaisesFormComponent } from './components/paises-form/paises-form.component';
 import { CountrynamePipe } from './pipes/countryname.pipe';
+import { PreguntasListComponent } from './components/preguntas-list/preguntas-list.component';
+import { PreguntasFormComponent } from './components/preguntas-form/preguntas-form.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { CountrynamePipe } from './pipes/countryname.pipe';
     PaisesListComponent,
     ButtonsComponent,
     PaisesFormComponent,
-    CountrynamePipe
+    CountrynamePipe,
+    PreguntasListComponent,
+    PreguntasFormComponent
   ],
   imports: [
     BrowserModule,

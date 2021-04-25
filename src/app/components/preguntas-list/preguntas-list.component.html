@@ -1,0 +1,30 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col w-100">
+            <label for="exampleDataList" class="form-label"><strong><i class="fas fa-search"></i> Search for questions </strong></label>
+            <input class="form-control" name="filterCountry" [(ngModel)]="filterQuestion" placeholder="Type to search...">
+        </div>
+    </div>
+</div> 
+<h1 class="text-center w-100" *ngIf="preguntas.length == 0"> No se encuentran preguntas <hr></h1>
+<ng-container *ngFor="let item of preguntas ">
+    <div class="col-md-4 p-4">
+        <div class="card rounded shadow-lg">
+            <div class="card-header">
+                <h4><i class="fas fa-book-open"></i> {{item.nombre_encuesta}} </h4>
+                <button class="btn btn-outline-danger btn-sm float-right rounded ml-1" (click)="deleteElement(item.id_pregunta)"><i class="fas fa-trash"></i></button>
+                <button class="btn btn-outline-info btn-sm float-right rounded" (click)="updateElement(item.id_pregunta)"><i class="fas fa-edit"></i></button> 
+            </div>
+            <div class="card-body text-center">
+                <strong><i class="fas fa-question-circle"></i> Pregunta:</strong>
+                <p class="font-italic">{{item.contenido}}</p>
+                <div class="text-center">
+                    
+                    <p><strong><i class="fas fa-reply"></i> respuesta correcta: <br> 
+                        {{item.inciso}}.</strong> {{item.respuesta}}
+                    </p><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
