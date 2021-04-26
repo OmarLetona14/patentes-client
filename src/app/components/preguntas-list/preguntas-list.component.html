@@ -7,7 +7,7 @@
     </div>
 </div> 
 <h1 class="text-center w-100" *ngIf="preguntas.length == 0"> No se encuentran preguntas <hr></h1>
-<ng-container *ngFor="let item of preguntas ">
+<ng-container *ngFor="let item of preguntas | pregunta:filterQuestion">
     <div class="col-md-4 p-4">
         <div class="card rounded shadow-lg">
             <div class="card-header">
@@ -19,7 +19,6 @@
                 <strong><i class="fas fa-question-circle"></i> Pregunta:</strong>
                 <p class="font-italic">{{item.contenido}}</p>
                 <div class="text-center">
-                    
                     <p><strong><i class="fas fa-reply"></i> respuesta correcta: <br> 
                         {{item.inciso}}.</strong> {{item.respuesta}}
                     </p><br>

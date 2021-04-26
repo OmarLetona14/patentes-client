@@ -19,11 +19,11 @@
             </span>
         </div>
     </div>
-    <ng-container *ngIf="edit">
+    <ng-container *ngIf="respuestas.length != 0">
         <div class="col-md-6">
             <label class="form-label text-strong"> <i class="fas fa-question"></i> Respuesta correcta <small>*</small></label>
-            <select class="form-control shadow-lg rounded-pill"  name="respuesta" id="respuesta">
-                <option  value="{{c.respuestas}}" *ngFor="let c of respuestas">{{c.inciso}}. {{c.respuesta}}</option> 
+            <select class="form-control shadow-lg rounded-pill"  name="respuesta" id="respuesta" formControlName="respuesta">
+                <option  value="{{c.respuesta}}" *ngFor="let c of respuestas">{{c.respuesta}}</option> 
             </select>
         </div>
         <div class="col-md-6">

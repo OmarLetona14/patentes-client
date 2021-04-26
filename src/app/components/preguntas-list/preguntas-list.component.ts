@@ -29,7 +29,7 @@ export class PreguntasListComponent implements OnInit {
     this.preguntasService.getAll().subscribe(
       res => {
         this.preguntas = res;
-        
+        console.log(res);
         this.spinnerService.stopSpinner();
       },
       err =>{
@@ -40,6 +40,7 @@ export class PreguntasListComponent implements OnInit {
   }
 
   deleteElement(id:string){
+    console.log(id);
     Swal.fire({
       title: '¿Está seguro de borrar este país?',
       showDenyButton: true,

@@ -1,5 +1,5 @@
 export default interface Pregunta{
-    id_pregunta?:string;
+    id_pregunta:string;
     contenido?:string;
     id_encuesta?:string;
     nombre_encuesta?:string;

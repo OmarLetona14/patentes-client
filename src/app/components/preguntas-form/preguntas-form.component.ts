@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import Encuesta from 'src/app/model/Encuesta';
 import Pregunta from 'src/app/model/Pregunta';
 import Respuesta from 'src/app/model/Respuesta';
@@ -9,6 +10,7 @@ import { PreguntaService } from 'src/app/services/pregunta.service';
 import { RespuestaService } from 'src/app/services/respuesta.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import Swal from 'sweetalert2';
+import { find } from 'rxjs/operators'
 
 @Component({
   selector: 'app-preguntas-form',
@@ -17,11 +19,16 @@ import Swal from 'sweetalert2';
 })
 export class PreguntasFormComponent implements OnInit {
 
+  response:string;
   public id:string;
   public registerForm: FormGroup;  
   respuestas:any = [];
   respuesta_correcta:string;
   encuestas:any = [];
+  encuesta:Encuesta = {
+    id_encuesta:"",
+    nombre_encuesta:""
+  }
   pregunta:Pregunta = {
     id_pregunta:"",
     contenido:"",
@@ -36,10 +43,7 @@ export class PreguntasFormComponent implements OnInit {
     id_pregunta:"",
   };
   respuesta:Respuesta ={
-    id_respuesta:"",
     respuesta:"",
-    inciso:"",
-    id_pregunta:""
   };
   edit:boolean = false; 
 
@@ -108,15 +112,14 @@ export class PreguntasFormComponent implements OnInit {
   }
 
   async saveData():Promise<void>{
-    
    try {
     const formValues = this.registerForm.value;
     this.pregunta.contenido = formValues.contenido;
     this.spinner.getSpinner();
-    console.log(formValues.nombre_encuesta);
-    this.encuestaService.getByName(formValues.nombre_encuesta.toString().trim()).subscribe(
+    delete this.encuesta.id_encuesta;
+    this.encuesta.nombre_encuesta = formValues.nombre_encuesta;
+    this.encuestaService.getByName(this.encuesta).subscribe(
       res =>{
-        console.log(res);
         const e = res as Encuesta;
         this.pregunta.id_encuesta = e.id_encuesta;
         this.preguntaService.insert(this.pregunta).subscribe(
@@ -137,7 +140,7 @@ export class PreguntasFormComponent implements OnInit {
               intentelo mas tarde.
               </strong>`, 'error');
           }
-        );
+        ).unsubscribe;
       },
       err=>{
         console.log(err);
@@ -177,6 +180,84 @@ export class PreguntasFormComponent implements OnInit {
 
   async onEditData():Promise<void>{
     if (this.registerForm.valid){
+      this.spinner.getSpinner();
+      const formValues = this.registerForm.value;
+      delete this.pregunta.nombre_encuesta;
+      delete this.pregunta.id_respuesta_correcta;
+      delete this.pregunta.respuesta;
+      delete this.pregunta.inciso;
+      this.pregunta.id_pregunta = this.id;
+      this.pregunta.contenido = formValues.contenido;
+      delete this.encuesta.id_encuesta;
+      this.encuesta.nombre_encuesta = formValues.nombre_encuesta;
+      this.encuestaService.getByName(this.encuesta).subscribe(
+        res=>{
+          const e = res as Encuesta;
+          this.pregunta.id_encuesta = e.id_encuesta;
+          if(formValues.respuesta === ""){
+            this.respuesta.respuesta = formValues.respuesta;
+            this.respuestaService.getByContenido(this.respuesta).subscribe(
+              res=>{
+                const r = res as Respuesta;
+                this.pregunta.id_respuesta = r.id_respuesta;
+                this.preguntaService.update(this.pregunta).subscribe(
+                  res=>{
+                    this.spinner.stopSpinner();    
+                    Swal.fire('Pregunta editada', `<strong>
+                    La pregunta ha sido editada correctamente.
+                    </strong>`, 'success');
+                    this.registerForm.reset();
+                    this.router.navigate(['/preguntas']);
+                  },
+                  err=>{
+                  console.log(err);
+                  this.spinner.stopSpinner();
+                  Swal.fire('Error de servidor', `<strong>
+                  Ocurrio un error al comunicarse con el servidor, por favor, <br>
+                  intentelo mas tarde.
+                  </strong>`, 'error');
+                  }
+                );
+              },
+              err=>{
+                console.log(err);
+                this.spinner.stopSpinner();
+                Swal.fire('Error de servidor', `<strong>
+                Ocurrio un error al comunicarse con el servidor, por favor, <br>
+                intentelo mas tarde.
+                </strong>`, 'error');
+              }
+            );
+          }else{
+            this.preguntaService.update(this.pregunta).subscribe(
+              res=>{
+                this.spinner.stopSpinner();    
+                Swal.fire('Pregunta editada', `<strong>
+                La pregunta ha sido editada correctamente.
+                </strong>`, 'success');
+                this.registerForm.reset();
+                this.router.navigate(['/preguntas']);
+              },
+              err=>{
+              console.log(err);
+              this.spinner.stopSpinner();
+              Swal.fire('Error de servidor', `<strong>
+              Ocurrio un error al comunicarse con el servidor, por favor, <br>
+              intentelo mas tarde.
+              </strong>`, 'error');
+              }
+            );
+          }
+        },
+        err => {
+          console.log(err);
+          this.spinner.stopSpinner();
+          Swal.fire('Error de servidor', `<strong>
+          Ocurrio un error al comunicarse con el servidor, por favor, <br>
+          intentelo mas tarde.
+          </strong>`, 'error');
+        }
+      );
     }
     else{
       Swal.fire('Campos incorrectos', `<strong>
@@ -196,22 +277,7 @@ export class PreguntasFormComponent implements OnInit {
       // Estructura [valor inicial, validaciones  ]
       contenido: ['', [Validators.required]],
       nombre_encuesta: ['', [Validators.required]],
+      respuesta:[''],
     });
   }
-
-  getAllRespuestas(){
-    const params = this.activedRoute.snapshot.params;
-    this.spinner.getSpinner();
-    this.respuestaService.getByPregunta(params.id).subscribe(
-      res=>{
-        this.respuestas = res as any;
-        this.spinner.stopSpinner();
-      },
-      err=>{
-        console.log(err);
-        this.spinner.stopSpinner();
-      }
-    );
-  }
-
 }

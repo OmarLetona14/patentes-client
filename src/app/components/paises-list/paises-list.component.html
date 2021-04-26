@@ -11,13 +11,13 @@
     <div class="col-md-4 p-4">
         <div class="card rounded shadow-lg">
             <div class="card-header">
-                <h2><i class="fas fa-globe"></i> {{item.nombre_pais}} 
-                    <button class="btn btn-outline-danger btn-sm float-right rounded ml-1" (click)="deleteElement(item.id_pais)"><i class="fas fa-trash"></i></button>
-                    <button class="btn btn-outline-info btn-sm float-right rounded" (click)="updateElement(item.id_pais)"><i class="fas fa-edit"></i></button></h2>
-                    <hr>
+                <h2><i class="fas fa-globe"></i> {{item.nombre_pais}} </h2>
+                <hr>
+                <button class="btn btn-outline-info btn-sm float-right rounded" (click)="updateElement(item.id_pais)"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-outline-danger btn-sm float-right rounded ml-1" (click)="deleteElement(item.id_pais)"><i class="fas fa-trash"></i></button>
                 <h4><strong>Capital:</strong> {{item.capital}}</h4>
             </div>
-            <div class="card-body text-center">
+            <div class="card-body text-center">   
                 <p><strong><i class="fas fa-users"></i> Poblacion: </strong>{{item.poblacion}} personas</p><br>
                 <p><strong><i class="fas fa-ruler-combined"></i> Area: </strong>{{item.area}} km2</p><br>
                 <p><strong><i class="fas fa-chart-area"></i> Region: </strong>{{item.nombre_region}} </p><br>

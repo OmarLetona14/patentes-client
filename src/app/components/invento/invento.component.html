@@ -1,0 +1,25 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col w-100">
+            <label for="exampleDataList" class="form-label"><strong><i class="fas fa-search"></i> Buscar inventos </strong></label>
+            <input class="form-control" name="filterCountry" [(ngModel)]="filterInvento" placeholder="Escriba para buscar...">
+        </div>
+    </div>
+</div> 
+<h1 class="text-center w-100" *ngIf="inventos.length == 0"> No se encuentran inventos <hr></h1>
+<ng-container *ngFor="let item of inventos | invento:filterInvento">
+    <div class="col-md-4 p-4">
+        <div class="card rounded shadow-lg">
+            <div class="card-header">
+                <h2><i class="fas fa-flask"></i> {{item.nombre_invento}} </h2>
+                    <hr>
+                <h4><strong><i class="fas fa-check-circle"></i> Año:</strong> {{item.anio}}</h4>
+            </div>
+            <div class="card-body text-center">
+                <button class="btn btn-outline-info btn-sm float-right rounded" (click)="updateElement(item.id_invento)"><i class="fas fa-edit"></i></button>
+                <p><strong><i class="fas fa-flag"></i> Pais del invento: </strong>{{item.nombre_pais}} </p><br>
+                <p><strong><i class="fas fa-user"></i> Profesional encargado: </strong>{{item.nombre_profesional}} </p><br>
+            </div>
+        </div>
+    </div>
+</ng-container>

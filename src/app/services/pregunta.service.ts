@@ -26,7 +26,7 @@ export class PreguntaService {
     return this.http.delete(`${environment.api_host}/preguntas/${id}`);
   }
 
-  public update(id:string, p:Pregunta){
-    return this.http.put(`${environment.api_host}/preguntas/${id}`, p);
+  public update(p:Pregunta){
+    return this.http.post(`${environment.api_host}/preguntas/update`, p);
   }
 }

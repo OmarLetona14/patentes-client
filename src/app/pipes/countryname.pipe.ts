@@ -9,7 +9,9 @@ export class CountrynamePipe implements PipeTransform {
     const results = [];
     if(arg==''){return value}
     for (const country of value){
-      if ( country.nombre_pais.toLowerCase().indexOf(arg.toLowerCase()) > -1){
+      if ( country.nombre_pais.toLowerCase().indexOf(arg.toLowerCase()) > -1 ||
+      country.capital.toLowerCase().indexOf(arg.toLowerCase()) > -1 ||
+      country.nombre_region.toLowerCase().indexOf(arg.toLowerCase()) > -1){
         results.push(country);
       }
     }
