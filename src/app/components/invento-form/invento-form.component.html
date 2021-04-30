@@ -1,1 +1,64 @@
-<p>invento-form works!</p>
+<form novalidation class="row g-3" (ngSubmit)="onSaveData()" [formGroup]="registerForm">
+    <div class="col-md-6">
+        <label class="form-label text-strong"><i class="fas fa-flask"></i>  Nombre del invento <small>*</small></label>
+        <input type="text" class="form-control shadow-lg rounded-pill" id="nombre_invento" placeholder="Nombre del invento" formControlName="nombre_invento"
+         [class]="validField('nombre_invento')">
+        <div class="invalid-feedback">
+        <span class="warning-text" *ngIf="registerForm.get('nombre_invento').errors?.required">
+            <strong>Por favor, introduzca un nombre del invento.</strong>
+        </span>
+        </div><hr>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label text-strong"><i class="fas fa-globe"></i> Año del invento <small>*</small></label>
+        <input type="number" class="form-control shadow-lg rounded-pill" id="anio" placeholder="Año" formControlName="anio" [class]="validField('anio')">
+        <div class="invalid-feedback">
+            <span class="warning-text" *ngIf="registerForm.get('anio').errors?.required">
+                <strong>Por favor, introduzca una año.</strong>
+            </span>
+        </div><hr>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label text-strong"><i class="fas fa-globe-europe"></i> Pais del invento <small>*</small></label>
+        <select class="form-control shadow-lg rounded-pill"  name="nombre_pais" id="nombre_pais" formControlName="nombre_pais">
+            <option  value="{{p.nombre_pais}}" *ngFor="let p of paises">{{p.nombre_pais}}</option> 
+        </select>
+        <div class="invalid-feedback">
+            <span class="warning-text" *ngIf="registerForm.get('nombre_pais').errors?.required">
+                <strong>Por favor, introduzca un pais.</strong>
+            </span>
+        </div><hr>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label text-strong"> <i class="fas fa-user"></i>  Profesional encargado <small>*</small></label>
+        <select class="form-control shadow-lg rounded-pill"  name="nombre_profesional" id="nombre_profesional" formControlName="nombre_profesional">
+            <option  value="{{p.nombre_profesional}}" *ngFor="let p of profesionales">{{p.nombre_profesional}}</option> 
+        </select>
+        <div class="invalid-feedback">
+            <span class="warning-text" *ngIf="registerForm.get('nombre_profesional').errors?.required">
+                <strong>Por favor, introduzca un profesional.</strong>
+            </span>
+        </div><hr>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label text-strong"> <i class="far fa-lightbulb"></i> Inventor <small>*</small></label>
+        <select class="form-control shadow-lg rounded-pill"  name="nombre_inventor" id="nombre_inventor" formControlName="nombre_inventor">
+            <option  value="{{p.nombre_inventor}}" *ngFor="let p of inventores">{{p.nombre_inventor}}</option> 
+        </select>
+        <div class="invalid-feedback">
+            <span class="warning-text" *ngIf="registerForm.get('nombre_inventor').errors?.required">
+                <strong>Por favor, introduzca un inventor.</strong>
+            </span>
+        </div><hr>
+    </div>
+    <div class="col-md-12 mb-2">
+        <hr class="w-100" style="color: white; height: 10px;">
+    </div>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-block btn-md shadow-lg rounded-pill" [ngClass]="isValidData()">
+            Aceptar 
+            <i class="fas fa-chevron-circle-right" *ngIf="registerForm.valid"></i>
+            <i class="fas fa-times" *ngIf="!registerForm.valid"></i>
+        </button>
+    </div>
+</form>

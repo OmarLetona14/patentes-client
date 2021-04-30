@@ -1,12 +1,263 @@
-<table class="table table-striped shadow-lg bg-secondary">
-    <thead class="bg-info shadow-lg rounded-pill">
-        <th scope="col">Nombre del pais</th>
-        <th scope="col">Numero de respuestas</th>
-    </thead>
-    <tbody class="">
-        <tr *ngFor="let country of countries">
-            <td>{{country.nombre_pais}}</td>
-            <td>{{country.numero_respuestas}}</td>
-        </tr>
-    </tbody>
-</table>
+<mat-tab-group>
+    <mat-tab class="tab-consulta" label="Consulta 1"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Nombre del profesional</th>
+                <th scope="col">Inventos asignados</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta1">
+                    <td>{{c.nombre_profesional}}</td>
+                    <td>{{c.inventos_asignados}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 2">
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Nombre del pais</th>
+                <th scope="col">Numero de respuestas</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta2">
+                    <td>{{c.nombre_pais}}</td>
+                    <td>{{c.numero_respuestas}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 3"> Content 3 </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 4"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Area</th>
+                <th scope="col">Jefe</th>
+                <th scope="col">Subalterno</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta4">
+                    <td>{{c.nombre_area}}</td>
+                    <td>{{c.jefe}}</td>
+                    <td>{{c.subalterno}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 5"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Area</th>
+                <th scope="col">Profesional</th>
+                <th scope="col">Salario</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta5">
+                    <td>{{c.nombre_area}}</td>
+                    <td>{{c.nombre_profesional}}</td>
+                    <td>{{c.salario}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 6"> Content 3 </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 7"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Invento</th>
+                <th scope="col">Area</th>
+                <th scope="col">Profesional</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta7">
+                    <td>{{c.nombre_invento}}</td>
+                    <td>{{c.nombre_area}}</td>
+                    <td>{{c.nombre_profesional}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 8"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Inicial</th>
+                <th scope="col">Suma</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta8">
+                    <td>{{c.inicial}}</td>
+                    <td>{{c.suma_area| number:0}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 9"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Inventor</th>
+                <th scope="col">Invento</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta9">
+                    <td>{{c.nombre_inventor}}</td>
+                    <td>{{c.nombre_invento}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 10">
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Invento</th>
+                <th scope="col">Año</th>
+                <th scope="col">Inventor</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta10">
+                    <td>{{c.nombre_invento}}</td>
+                    <td>{{c.anio}}</td>
+                    <td>{{c.nombre_inventor}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 11"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Pais</th>
+                <th scope="col">Area</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta11">
+                    <td>{{c.nombre_pais}}</td>
+                    <td>{{c.area | number:'1.2-2'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 12">
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Invento</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta12">
+                    <td>{{c.nombre_invento}}</td>
+                </tr>
+            </tbody>
+        </table> 
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 13"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Profesional</th>
+                <th scope="col">Salario</th>
+                <th scope="col">Comision</th>
+                <th scope="col">Salario neto</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta13">
+                    <td>{{c.nombre_profesional}}</td>
+                    <td>{{c.salario | number:0 }}</td>
+                    <td>{{c.comision | number:0 }}</td>
+                    <td>{{c.total_salario | number:0 }}</td>
+                </tr>
+            </tbody>
+        </table>
+     </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 14"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Encuesta</th>
+                <th scope="col">Numero de respuestas</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta14">
+                    <td>{{c.nombre_encuesta}}</td>
+                    <td>{{c.numero_respuestas}}</td>
+                </tr>
+            </tbody>
+        </table>
+     </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 15"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Pais</th>
+                <th scope="col">Capital</th>
+                <th scope="col">Area</th>
+                <th scope="col">Poblacion</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta15 ">
+                    <td>{{c.nombre_pais}}</td>
+                    <td>{{c.capital}}</td>
+                    <td>{{c.area | number:0 }}</td>
+                    <td>{{c.poblacion | number:0 }}</td>
+                </tr>
+            </tbody>
+        </table>    
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 16"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Jefe</th>
+                <th scope="col">Area</th>
+
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta16">
+                    <td>{{c.nombre_profesional}}</td>
+                    <td>{{c.nombre_area}}</td>
+                </tr>
+            </tbody>
+        </table>     
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 17"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Invento</th>
+                <th scope="col">Año</th>
+
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta17">
+                    <td>{{c.nombre_invento}}</td>
+                    <td>{{c.anio}}</td>
+                </tr>
+            </tbody>
+        </table> 
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 18"> Content 3 </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 19"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Pais</th>
+                <th scope="col">Frontera</th>
+                <th scope="col">Cardinalidad</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta19">
+                    <td>{{c.origen}}</td>
+                    <td>{{c.frontera}}</td>
+                    <td>{{c.cardinalidad}}</td>
+                </tr>
+            </tbody>
+        </table>    
+    </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 20"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Profesional</th>
+                <th scope="col">Salario</th>
+                <th scope="col">Comision</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta20">
+                    <td>{{c.nombre_profesional}}</td>
+                    <td>{{c.salario | number:0 }}</td>
+                    <td>{{c.comision | number:0 }}</td>
+                </tr>
+            </tbody>
+        </table>     
+    </mat-tab>
+  </mat-tab-group>

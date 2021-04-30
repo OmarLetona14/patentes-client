@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { window } from 'rxjs/operators';
 import { SpinnerService } from 'src/app/services/spinner.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import  Swal from "sweetalert2";
 
 @Component({
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;  
 
   constructor(private fb:FormBuilder, 
-    private spinner:SpinnerService) { }
+    private spinner:SpinnerService, private usuarioService:UsuarioService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -23,9 +25,19 @@ export class LoginComponent implements OnInit {
 
   onLogin(){
     if (this.loginForm.valid){
+      const formValues = this.loginForm.value;
       try {
         this.spinner.getSpinner();
-        this.spinner.stopSpinner();
+        if(this.usuarioService.login(formValues.email, formValues.password)){
+          this.spinner.stopSpinner();
+          location.pathname = '/paises';
+        }else{
+          Swal.fire('Credenciales incorrectas', `<strong>
+          Las credenciales que proporciono no corresponden a ningun usuario registrado.
+        </strong>`, 'error');
+          this.spinner.stopSpinner();
+        }
+        
       } catch (error) {
         Swal.fire('Ocurrio un error', `<strong>
          Error al comunicarse con el servidor.
@@ -65,7 +77,7 @@ export class LoginComponent implements OnInit {
   private initForm():void{
     this.loginForm = this.fb.group({
       // Estructura [valor inicial, validaciones  ]
-      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
   }
