@@ -18,6 +18,7 @@ export class PaisesFormComponent implements OnInit {
   public id:string;
   public registerForm: FormGroup;  
   regiones:any = [];
+  fronteras:any = [];
   pais:Pais = {
     id_pais:"",
     nombre_pais:"",
@@ -48,6 +49,14 @@ export class PaisesFormComponent implements OnInit {
         res=>{
           this.pais = res as any;
           this.registerForm.patchValue(this.pais);
+          this.paisesService.getFronteras(this.id).subscribe(
+            res=>{
+              this.fronteras = res;
+            },
+            err=>{
+              console.error(err);
+            }
+          );
         },
         err=>{
           console.log(err);

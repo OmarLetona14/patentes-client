@@ -14,6 +14,10 @@ export class PaisService {
     return this.http.get(`${environment.api_host}/paises`);
   }
 
+  public getFronteras(id:string){
+    return this.http.get(`${environment.api_host}/paises/fronteras/${id}`);
+  }
+
   public getOne(id:String){
     return this.http.get(`${environment.api_host}/paises/${id}`);
   }
