@@ -7,6 +7,9 @@ import { RegionService } from 'src/app/services/region.service';
 import Pais from 'src/app/model/Pais';
 import Region from 'src/app/model/Region';
 import { Router, ActivatedRoute } from '@angular/router';
+import Frontera from 'src/app/model/Frontera';
+import { ResourceLoader } from '@angular/compiler';
+import { window } from 'rxjs/operators';
 
 @Component({
   selector: 'app-paises-form',
@@ -19,6 +22,17 @@ export class PaisesFormComponent implements OnInit {
   public registerForm: FormGroup;  
   regiones:any = [];
   fronteras:any = [];
+  pais_frontera:string = ''
+  paises:any=[];
+  frontera:Frontera ={
+    norte:'',
+    sur:'',
+    este:'',
+    oeste:'',
+    id_pais_frontera:'',
+    id_pais_origen:''
+  }
+  cardinalidad:string = '';
   pais:Pais = {
     id_pais:"",
     nombre_pais:"",
@@ -52,6 +66,12 @@ export class PaisesFormComponent implements OnInit {
           this.paisesService.getFronteras(this.id).subscribe(
             res=>{
               this.fronteras = res;
+              this.paisesService.getAll().subscribe(
+                res=>{
+                  this.paises = res;
+                },
+                err=>{console.log(err)}
+              );
             },
             err=>{
               console.error(err);
@@ -115,6 +135,8 @@ export class PaisesFormComponent implements OnInit {
       </strong>`, 'error');
     }
   }
+
+  onDeleteFrontera(){}
 
   isValidData():String{
     if (this.registerForm.valid){
@@ -208,6 +230,88 @@ export class PaisesFormComponent implements OnInit {
       this.spinner.stopSpinner()},
       err=>{console.error(err)
       this.spinner.stopSpinner()}
+    );
+  }
+
+  getFronteras(){
+    switch (this.cardinalidad) {
+      case 'Norte':
+        this.frontera.norte = 'X'
+        break;
+        case 'Sur':
+        this.frontera.sur = 'X'
+        break;
+        case 'Este':
+        this.frontera.este = 'X'
+        break;
+        case 'Oeste':
+        this.frontera.oeste = 'X'
+        break;
+    }
+  }
+
+  getidPais(nombre_pais:string):string{
+    var id:string;
+    this.paises.forEach(element => {
+      if(element != null || element != undefined){
+        if (element.nombre_pais.trim().toLowerCase() == nombre_pais.trim().toLowerCase()){
+          id = element.id_pais;
+        }
+      }
+    });
+    return id;
+  }
+
+  deleteFrontera(id_frontera:string){
+    Swal.fire({
+      title: '¿Está seguro de borrar esta frontera?',
+      showDenyButton: true,
+      confirmButtonText: `Sí`,
+      denyButtonText: `No`,
+      icon:'question'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.spinner.getSpinner();
+        this.paisesService.deleteFrontera(id_frontera).subscribe(
+          res =>{
+            location.reload();
+            this.spinner.stopSpinner();
+            Swal.fire('¡Borrado exitosamente!', '', 'success');
+          },
+          err=>{
+            console.log(err);
+            this.spinner.stopSpinner();
+            Swal.fire('Error de servidor', `<strong>
+            Ocurrio un error al comunicarse con el servidor, por favor, <br>
+            intentelo mas tarde.
+            </strong>`, 'error');
+          }
+        );
+      } else if (result.isDenied) {
+        Swal.fire('No se borrará ningun registro.', '', 'info')
+      }
+    })
+  }
+  addFrontera(){
+    this.spinner.getSpinner()
+    this.getFronteras();
+    this.frontera.id_pais_frontera = this.getidPais(this.pais_frontera);
+    this.frontera.id_pais_origen = this.id
+    this.paisesService.insertFrontera(this.frontera).subscribe(
+      res=>{
+        Swal.fire('Frontera registrada', `<strong>
+        La frontera ha sido registrada correctamente.
+        </strong>`, 'success');
+        this.spinner.stopSpinner();
+        location.reload();
+      },
+      err=>{
+        Swal.fire('Error de servidor', `<strong>
+            Ocurrio un error al comunicarse con el servidor, por favor, <br>
+            intentelo mas tarde.
+            </strong>`, 'error');
+        this.spinner.stopSpinner()
+      }
     );
   }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import Frontera from '../model/Frontera';
 import Pais from '../model/Pais';
 
 @Injectable({
@@ -24,6 +25,14 @@ export class PaisService {
 
   public insert(p:Pais){
     return this.http.post(`${environment.api_host}/paises`, p);
+  }
+
+  public insertFrontera(f:Frontera){
+    return this.http.post(`${environment.api_host}/paises/fronteras`, f);
+  }
+
+  public deleteFrontera(id:string){
+    return this.http.delete(`${environment.api_host}/paises/fronteras/${id}`);
   }
 
   public delete(id:string){

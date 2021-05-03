@@ -45,19 +45,6 @@
             </span>
         </div>
     </div>
-    <div class="col-md-6">
-        <ng-container *ngFor="let item of fronteras">
-            <ol class="list-group list-group-numbered">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">{{item.frontera}}</div>
-                    {{item.cardinalidad}}
-                  </div>
-                  <span class="badge bg-warning rounded-pill"><i class="fas fa-trash"></i></span>
-                </li>
-            </ol>
-        </ng-container>
-    </div>
     <div class="col-md-12 mb-2">
         <hr class="w-100" style="color: white; height: 10px;">
     </div>
@@ -67,5 +54,49 @@
             <i class="fas fa-chevron-circle-right" *ngIf="registerForm.valid"></i>
             <i class="fas fa-times" *ngIf="!registerForm.valid"></i>
         </button>
+        <hr>
     </div>
 </form>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h1><strong><i class="fas fa-grip-lines"></i> Fronteras</strong></h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <p>Pais</p>
+            <select class="form-control shadow-lg rounded-pill"  name="nombre_pais" id="nombre_pais"  [(ngModel)]="pais_frontera">
+                <option  value="{{c.nombre_pais}}" *ngFor="let c of paises">{{c.nombre_pais}}</option> 
+            </select> 
+            <hr>
+            <p>Cardinalidad</p>
+            <select class="form-control shadow-lg rounded-pill"  name="cardinalidad" id="cardinalidad" [(ngModel)]="cardinalidad">
+                <option value="Norte">Norte</option> 
+                <option value="Sur">Sur</option> 
+                <option value="Este">Este</option> 
+                <option value="Oeste">Oeste</option> 
+            </select>
+            <hr>
+            <button class="btn btn-info btn-md btn-block rounded-pill shadow-lg" (click)="addFrontera()">Agregar Frontera <i class="fas fa-check-square"></i></button>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label text-strong"><i class="fas fa-chart-area"></i> Fronteras <small>*</small></label>
+            <ng-container *ngFor="let item of fronteras">
+                <ol class="list-group list-group-numbered rounded ">
+                    <li class="list-group-item d-flex justify-content-between align-items-start shadow-lg rounded">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold"><strong>Pais con el que limita: {{item.frontera}}</strong></div>
+                        <p class="italic">cardinalidad: {{item.cardinalidad}}</p>
+                      </div>
+                      <button class="bg-warning rounded border-0" (click)="onDeleteFrontera()">
+                        <span class="badge bg-warning rounded mw-100 mh-100" (click)="deleteFrontera(item.id_frontera)"><i class="fas fa-trash"></i></span>
+                      </button>
+                    </li>
+                </ol>
+            </ng-container>
+        </div>
+    </div>
+</div>
