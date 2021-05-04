@@ -27,7 +27,20 @@
             </tbody>
         </table>
     </mat-tab>
-    <mat-tab class="tab-consulta" label="Consulta 3"> Content 3 </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 3"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Nombre del pais</th>
+                <th scope="col">Area</th>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta3">
+                    <td>{{c.nombre_pais}}</td>
+                    <td>{{c.area}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
     <mat-tab class="tab-consulta" label="Consulta 4"> 
         <table class="table table-striped shadow-lg bg-secondary">
             <thead class="bg-info shadow-lg rounded-pill">
@@ -240,7 +253,21 @@
             </tbody>
         </table> 
     </mat-tab>
-    <mat-tab class="tab-consulta" label="Consulta 18"> Content 3 </mat-tab>
+    <mat-tab class="tab-consulta" label="Consulta 18"> 
+        <table class="table table-striped shadow-lg bg-secondary">
+            <thead class="bg-info shadow-lg rounded-pill">
+                <th scope="col">Pais</th>
+                <th scope="col">Poblacion</th>
+
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let c of consulta18">
+                    <td>{{c.nombre_pais}}</td>
+                    <td>{{c.poblacion}}</td>
+                </tr>
+            </tbody>
+        </table> 
+    </mat-tab>
     <mat-tab class="tab-consulta" label="Consulta 19"> 
         <table class="table table-striped shadow-lg bg-secondary">
             <thead class="bg-info shadow-lg rounded-pill">
