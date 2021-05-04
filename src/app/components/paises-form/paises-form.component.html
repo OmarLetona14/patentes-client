@@ -81,9 +81,10 @@
             </select>
             <hr>
             <button class="btn btn-info btn-md btn-block rounded-pill shadow-lg" (click)="addFrontera()">Agregar Frontera <i class="fas fa-check-square"></i></button>
+            <hr>
         </div>
         <div class="col-md-6">
-            <label class="form-label text-strong"><i class="fas fa-chart-area"></i> Fronteras <small>*</small></label>
+            <label class="form-label text-strong"> Fronteras </label>
             <ng-container *ngFor="let item of fronteras">
                 <ol class="list-group list-group-numbered rounded ">
                     <li class="list-group-item d-flex justify-content-between align-items-start shadow-lg rounded">
@@ -96,6 +97,7 @@
                       </button>
                     </li>
                 </ol>
+            <hr>
             </ng-container>
         </div>
     </div>
