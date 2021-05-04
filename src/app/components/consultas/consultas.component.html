@@ -36,7 +36,7 @@
             <tbody class="">
                 <tr *ngFor="let c of consulta3">
                     <td>{{c.nombre_pais}}</td>
-                    <td>{{c.area}}</td>
+                    <td>{{c.area | number:0 }}</td>
                 </tr>
             </tbody>
         </table>
@@ -263,7 +263,7 @@
             <tbody class="">
                 <tr *ngFor="let c of consulta18">
                     <td>{{c.nombre_pais}}</td>
-                    <td>{{c.poblacion}}</td>
+                    <td>{{c.poblacion | number:0 }}</td>
                 </tr>
             </tbody>
         </table> 
