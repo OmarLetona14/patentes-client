@@ -28,7 +28,9 @@ import { InventorComponent } from './components/invento/invento.component';
 import { PreguntaPipe } from './pipes/pregunta.pipe';
 import { InventoFormComponent } from './components/invento-form/invento-form.component';
 import { InventoPipe } from './pipes/invento.pipe';
-import {MatTabsModule} from '@angular/material/tabs'
+import {MatTabsModule} from '@angular/material/tabs';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment'
 
 
 @NgModule({
@@ -62,7 +64,13 @@ import {MatTabsModule} from '@angular/material/tabs'
     MatDividerModule,
     MatTabsModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     SpinnerService
